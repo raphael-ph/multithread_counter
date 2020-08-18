@@ -12,13 +12,13 @@
 
 /*======= Variaveis Globais ======= */
 int primes; // contar números primos
-pthread_mutex_t lock;
+pthread_mutex_t lock; // trava a thread
 int input; // entrada a ser colocada pelo programa
 /* ================================ */
 
 /* funcao simples que detecta se um número eh ou nao primo.
-* retorna 0 se nao primo
-* retorna 1 se primo
+* nao primo: SAIDA = 0
+* primo: SAIDA = 1
 */
 int prime_number(int number)
 {
@@ -58,8 +58,8 @@ void* worker(void *arg)
 
 int main() 
 {
-	pthread_t threads[MAX_THREADS]; // quantidade max de threads que podem executar
-	int thread_counter = 0; // contar qunatas threads existem
+	pthread_t threads[MAX_THREADS]; // quantidade max de threads
+	int thread_counter = 0; // contar quantas threads existem
 	int aux = 0; // variavel auxiliar	
 	
 	primes = 0; // inicializar a quantidade de numeros primos
@@ -72,10 +72,8 @@ int main()
 			
 			/* criar a thread */
 			pthread_create(&(threads[thread_counter]), NULL, worker, &input);
-		}
-		
-		/* tempo para a thread */
-		sleep(1); 
+			sleep(1);
+		} 
 		
 		thread_counter++; // contador do numero de threads
 		
@@ -98,9 +96,3 @@ int main()
 	
 	return 0;
 }
-
-
-
-
-
-
